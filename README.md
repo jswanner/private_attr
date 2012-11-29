@@ -1,4 +1,4 @@
-# PrivateAttr
+# PrivateAttr [![Build Status](https://secure.travis-ci.org/jswanner/private_attr.png?branch=master)](https://travis-ci.org/jswanner/private_attr)
 
 Perhaps it's just personal preference, but I don't like to use instance
 variables througout my Ruby classes. At the same time, I don't
