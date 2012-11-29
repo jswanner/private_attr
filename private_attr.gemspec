@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Easily create private/protected attribute readers/writers}
   gem.summary       = %q{Easily create private/protected attribute readers/writers}
   gem.homepage      = "https://github.com/jswanner/private_attr"
+  gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
