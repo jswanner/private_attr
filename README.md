@@ -7,13 +7,8 @@ tend to use something like the following:
 
 ```ruby
 class Foo
-
   def initialize bar
     self.bar = bar
-  end
-
-  def use_bar
-    bar
   end
 
   private
@@ -27,7 +22,6 @@ top of my classes, which means I sometimes use something like:
 
 ```ruby
 class Bar
-
   attr_accessor :foo
   private :foo, :foo=
 
