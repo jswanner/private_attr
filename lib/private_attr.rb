@@ -1,6 +1,8 @@
 require "private_attr/version"
 
 module PrivateAttr
+  module_function
+
   def private_attr_accessor *attr
     private_attr_reader(*attr)
     private_attr_writer(*attr)

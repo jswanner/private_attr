@@ -242,4 +242,10 @@ describe PrivateAttr do
       other.instance_variable_get('@writer').must_equal value
     end
   end
+
+  describe 'method visibility' do
+    it 'extending classes does not increase their public APIs' do
+      PrivateDummy.public_methods.wont_include :private_attr_accessor
+    end
+  end
 end
