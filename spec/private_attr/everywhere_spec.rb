@@ -8,13 +8,13 @@ describe 'private_attr/everywhere' do
 
   it 'requiring only private_attr keeps Classes and Modules intact' do
     require 'private_attr'
-    -> { class  Cla; private_attr_reader :priv; end }.must_raise NoMethodError
-    -> { module Mod; private_attr_reader :priv; end }.must_raise NoMethodError
+    Class.new.private_methods.wont_include :private_attr_reader
+    Module.new.private_methods.wont_include :private_attr_reader
   end
 
   it 'requiring private_attr/everywhere adds it to all Classes and Modules' do
     require 'private_attr/everywhere'
-    class  Cla; private_attr_reader :priv; end
-    module Mod; private_attr_reader :priv; end
+    Class.new.private_methods.must_include :private_attr_reader
+    Module.new.private_methods.must_include :private_attr_reader
   end
 end
