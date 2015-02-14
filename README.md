@@ -17,8 +17,9 @@ class Foo
 end
 ```
 
-But, I really like to declare my attribute readers and writers near the
-top of my classes, which means I sometimes use something like:
+Unfortunately, this makes Ruby show a ‘private attribute?’ warning.
+Also, I really like to declare my attribute readers and writers near
+the top of my classes, which means I sometimes use something like:
 
 ```ruby
 class Bar
