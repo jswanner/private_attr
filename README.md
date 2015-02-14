@@ -80,6 +80,10 @@ class Bar
 end
 ```
 
+If you don’t want to extend all of your modules and classes
+separately you can also `require 'private_attr/everywhere'`
+and the methods available everywhere.
+
 ## Contributing
 
 1. Fork it
