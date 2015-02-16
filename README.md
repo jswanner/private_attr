@@ -82,7 +82,7 @@ end
 
 If you don’t want to extend all of your modules and classes
 separately you can also `require 'private_attr/everywhere'`
-and the methods available everywhere.
+and the methods will be available everywhere.
 
 ## Contributing
 
