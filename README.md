@@ -17,8 +17,9 @@ class Foo
 end
 ```
 
-But, I really like to declare my attribute readers and writers near the
-top of my classes, which means I sometimes use something like:
+Unfortunately, this makes Ruby show a ‘private attribute?’ warning.
+Also, I really like to declare my attribute readers and writers near
+the top of my classes, which means I sometimes use something like:
 
 ```ruby
 class Bar
@@ -78,6 +79,10 @@ class Bar
   end
 end
 ```
+
+If you don’t want to extend all of your modules and classes
+separately you can also `require 'private_attr/everywhere'`
+and the methods available everywhere.
 
 ## Contributing
 
