@@ -182,7 +182,7 @@ describe PrivateAttr do
             super.upcase
           end
         end
-        Class.new(PrivateDummy).include(mod)
+        Class.new(PrivateDummy).send(:include, mod)
       end
 
       it 'allows alias to be called internally' do
