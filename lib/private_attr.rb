@@ -37,4 +37,9 @@ module PrivateAttr
     alias_method(new_name, old_name)
     private(new_name)
   end
+
+  def protected_alias_method(new_name, old_name)
+    alias_method(new_name, old_name)
+    protected(new_name)
+  end
 end
