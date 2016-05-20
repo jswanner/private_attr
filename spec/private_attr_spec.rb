@@ -53,7 +53,7 @@ describe PrivateAttr do
   let(:dummy) { dummy_class.new }
   let(:other) { dummy_class.new }
   let(:old_value) { 'old value' }
-  let(:value) { 'value' }
+  let(:new_value) { 'new value' }
 
   describe 'private_attr_accessor' do
     let(:dummy_class) { PrivateDummy }
@@ -65,8 +65,8 @@ describe PrivateAttr do
     end
 
     it 'allows attribute to be written internally' do
-      dummy.write_accessor value
-      dummy.instance_variable_get('@accessor').must_equal value
+      dummy.write_accessor new_value
+      dummy.instance_variable_get('@accessor').must_equal new_value
     end
 
     it 'raises Error when read externally' do
@@ -74,7 +74,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.accessor = value }.must_raise NoMethodError
+      -> { dummy.accessor = new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read by other' do
@@ -82,7 +82,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written by other' do
-      -> { dummy.write_accessor_other other, value }.must_raise NoMethodError
+      -> { dummy.write_accessor_other other, new_value }.must_raise NoMethodError
     end
   end
 
@@ -96,7 +96,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written internally' do
-      -> { dummy.write_reader value }.must_raise NoMethodError
+      -> { dummy.write_reader new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read externally' do
@@ -104,7 +104,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.reader = value }.must_raise NoMethodError
+      -> { dummy.reader = new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read by other' do
@@ -112,7 +112,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written by other' do
-      -> { dummy.write_reader_other other, value }.must_raise NoMethodError
+      -> { dummy.write_reader_other other, new_value }.must_raise NoMethodError
     end
   end
 
@@ -126,8 +126,8 @@ describe PrivateAttr do
     end
 
     it 'allows attribute to be written internally' do
-      dummy.write_writer value
-      dummy.instance_variable_get('@writer').must_equal value
+      dummy.write_writer new_value
+      dummy.instance_variable_get('@writer').must_equal new_value
     end
 
     it 'raises Error when read externally' do
@@ -135,7 +135,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.writer = value }.must_raise NoMethodError
+      -> { dummy.writer = new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read by other' do
@@ -143,7 +143,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written by other' do
-      -> { dummy.write_writer_other other, value }.must_raise NoMethodError
+      -> { dummy.write_writer_other other, new_value }.must_raise NoMethodError
     end
   end
 
@@ -157,8 +157,8 @@ describe PrivateAttr do
     end
 
     it 'allows attribute to be written internally' do
-      dummy.write_accessor value
-      dummy.instance_variable_get('@accessor').must_equal value
+      dummy.write_accessor new_value
+      dummy.instance_variable_get('@accessor').must_equal new_value
     end
 
     it 'raises Error when read externally' do
@@ -166,17 +166,17 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.accessor = value }.must_raise NoMethodError
+      -> { dummy.accessor = new_value }.must_raise NoMethodError
     end
 
     it 'allows attribute to be read by other' do
-      other.instance_variable_set '@accessor', value
-      dummy.read_accessor_other(other).must_equal value
+      other.instance_variable_set '@accessor', new_value
+      dummy.read_accessor_other(other).must_equal new_value
     end
 
     it 'allows attribute to be written by other' do
-      dummy.write_accessor_other other, value
-      other.instance_variable_get('@accessor').must_equal value
+      dummy.write_accessor_other other, new_value
+      other.instance_variable_get('@accessor').must_equal new_value
     end
   end
 
@@ -190,7 +190,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written internally' do
-      -> { dummy.write_reader value }.must_raise NoMethodError
+      -> { dummy.write_reader new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read externally' do
@@ -198,16 +198,16 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.reader = value }.must_raise NoMethodError
+      -> { dummy.reader = new_value }.must_raise NoMethodError
     end
 
     it 'allows attribute to be read by other' do
-      other.instance_variable_set '@reader', value
-      dummy.read_reader_other(other).must_equal value
+      other.instance_variable_set '@reader', new_value
+      dummy.read_reader_other(other).must_equal new_value
     end
 
     it 'raises Error when written by other' do
-      -> { dummy.write_reader_other other, value }.must_raise NoMethodError
+      -> { dummy.write_reader_other other, new_value }.must_raise NoMethodError
     end
   end
 
@@ -221,8 +221,8 @@ describe PrivateAttr do
     end
 
     it 'allows attribute to be written internally' do
-      dummy.write_writer value
-      dummy.instance_variable_get('@writer').must_equal value
+      dummy.write_writer new_value
+      dummy.instance_variable_get('@writer').must_equal new_value
     end
 
     it 'raises Error when read externally' do
@@ -230,7 +230,7 @@ describe PrivateAttr do
     end
 
     it 'raises Error when written externally' do
-      -> { dummy.writer = value }.must_raise NoMethodError
+      -> { dummy.writer = new_value }.must_raise NoMethodError
     end
 
     it 'raises Error when read by other' do
@@ -238,8 +238,8 @@ describe PrivateAttr do
     end
 
     it 'allows attribute to be written by other' do
-      dummy.write_writer_other other, value
-      other.instance_variable_get('@writer').must_equal value
+      dummy.write_writer_other other, new_value
+      other.instance_variable_get('@writer').must_equal new_value
     end
   end
 
