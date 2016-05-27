@@ -57,6 +57,7 @@ class Bar
   private_attr_accessor :foo
   private_attr_reader :baz
   private_attr_writer :bat
+  private_alias_method :bar, :foo
 
   def initialize foo
     self.foo = foo

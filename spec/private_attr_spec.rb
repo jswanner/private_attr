@@ -33,6 +33,16 @@ class Dummy
   def write_writer_other other, value
     other.writer = value
   end
+
+  attr_reader :original
+
+  def call_aliased
+    aliased
+  end
+
+  def call_aliased_other other
+    other.aliased
+  end
 end
 
 class PrivateDummy < Dummy
@@ -40,6 +50,7 @@ class PrivateDummy < Dummy
   private_attr_accessor :accessor
   private_attr_reader :reader
   private_attr_writer :writer
+  private_alias_method :aliased, :original
 end
 
 class ProtectedDummy < Dummy
@@ -47,6 +58,7 @@ class ProtectedDummy < Dummy
   protected_attr_accessor :accessor
   protected_attr_reader :reader
   protected_attr_writer :writer
+  protected_alias_method :aliased, :original
 end
 
 describe PrivateAttr do
@@ -147,6 +159,55 @@ describe PrivateAttr do
     end
   end
 
+  describe 'private_alias_method' do
+    let(:dummy_class) { PrivateDummy }
+
+    before { dummy.instance_variable_set '@original', old_value }
+
+    it 'allows alias to be called internally' do
+      dummy.call_aliased.must_equal old_value
+    end
+
+    it 'raises Error when alias is called externally' do
+      -> { dummy.aliased other }.must_raise NoMethodError
+    end
+
+    it 'raises Error when alias is called by other' do
+      -> { dummy.call_aliased_other other }.must_raise NoMethodError
+    end
+
+    it 'allows the original method to be called externally' do
+      dummy.original.must_equal old_value
+    end
+
+    describe 'when the original method is overridden' do
+      let(:dummy_class) do
+        mod = Module.new do
+          def original
+            super.upcase
+          end
+        end
+        Class.new(PrivateDummy).send(:include, mod)
+      end
+
+      it 'allows alias to be called internally' do
+        dummy.call_aliased.must_equal old_value
+      end
+
+      it 'raises Error when alias is called externally' do
+        -> { dummy.aliased }.must_raise NoMethodError
+      end
+
+      it 'raises Error when alias is called by other' do
+        -> { dummy.call_aliased_other other }.must_raise NoMethodError
+      end
+
+      it 'allows the overridden method to be called externally' do
+        dummy.original.must_equal old_value.upcase
+      end
+    end
+  end
+
   describe 'protected_attr_accessor' do
     let(:dummy_class) { ProtectedDummy }
 
@@ -242,6 +303,60 @@ describe PrivateAttr do
       other.instance_variable_get('@writer').must_equal new_value
     end
   end
+
+  describe 'protected_alias_method' do
+    let(:dummy_class) { ProtectedDummy }
+    let(:other_value) { 'other value' }
+
+    before do
+      dummy.instance_variable_set '@original', old_value
+      other.instance_variable_set '@original', other_value
+    end
+
+    it 'allows alias to be called internally' do
+      dummy.call_aliased.must_equal old_value
+    end
+
+    it 'raises Error when alias is called externally' do
+      -> { dummy.aliased }.must_raise NoMethodError
+    end
+
+    it 'allows alias to be called by other' do
+      dummy.call_aliased_other(other).must_equal other_value
+    end
+
+    it 'allows the original method to be called externally' do
+      dummy.original.must_equal old_value
+    end
+
+    describe 'when the original method is overridden' do
+      let(:dummy_class) do
+        mod = Module.new do
+          def original
+            super.upcase
+          end
+        end
+        Class.new(ProtectedDummy).send(:include, mod)
+      end
+
+      it 'allows alias to be called internally' do
+        dummy.call_aliased.must_equal old_value
+      end
+
+      it 'raises Error when alias is called externally' do
+        -> { dummy.aliased }.must_raise NoMethodError
+      end
+
+      it 'allows alias to be called by other' do
+        dummy.call_aliased_other(other).must_equal other_value
+      end
+
+      it 'allows the overridden method to be called externally' do
+        dummy.original.must_equal old_value.upcase
+      end
+    end
+  end
+
 
   describe 'method visibility' do
     it 'extending classes does not increase their public APIs' do
